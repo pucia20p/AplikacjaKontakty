@@ -7,6 +7,7 @@ namespace AplikacjaKontakty
     public partial class Form1 : Form
     {
         List<string[]> dataBazych = new List<string[]>();
+        bool sortowaniePoNazwisku = false;
         public Form1()
         {
             InitializeComponent();
@@ -31,6 +32,7 @@ namespace AplikacjaKontakty
                 dataBazych.RemoveAt(selectedIndex);
             }
             dataBazych.Add([imie, nazwisko, nrTel, dataUrodzenia.ToString()]);
+            sortuj(sortowaniePoNazwisku);
             aktualizujStanListy();
         }
 
@@ -55,12 +57,20 @@ namespace AplikacjaKontakty
 
         private void zapiszBaze() // zapisuje informacje z datyBazych do pliku kontakty.kel
         {
-            StreamWriter plik = new StreamWriter("kontakty.kel", false);
-            foreach (string[] dane in dataBazych)
+            try
             {
-                plik.WriteLine(dane[0] + ';' + dane[1] + ';' + dane[2] + ';' + dane[3]);
+                StreamWriter plik = new StreamWriter("kontakty.kel", false);
+                foreach (string[] dane in dataBazych)
+                {
+                    plik.WriteLine(dane[0] + ';' + dane[1] + ';' + dane[2] + ';' + dane[3]);
+                }
+                plik.Close();
+                MessageBox.Show("Zapisano bazę!");
             }
-            plik.Close();
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         public void aktualizujStanListy() // aktualizuje stan listy wyświetlającej elementy
@@ -70,6 +80,16 @@ namespace AplikacjaKontakty
             {
                 listBox1.Items.Add(dane[0] + " " + dane[1]);
             }
+        }
+
+        private void sortuj(bool sortujPoNazwisku = false)
+        {
+            dataBazych.Sort((string[] arg1, string[] arg2) => String.Compare(arg1[sortujPoNazwisku ? 1 : 0], arg2[sortujPoNazwisku ? 1 : 0]));
+        }
+
+        public void wybierzRekord(int index)
+        {
+            listBox1.SelectedIndex = index;
         }
 
         private void eddycjaRekorduToolStripMenuItem_Click(object sender, EventArgs e)
@@ -100,6 +120,49 @@ namespace AplikacjaKontakty
             dataBazych.Clear();
             zapiszBaze();
             aktualizujStanListy();
+        }
+
+        private void sortowaniePoImieniuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            sortowaniePoNazwisku = false;
+            sortuj();
+            aktualizujStanListy();
+        }
+
+        private void sortowaniePoNazwiskuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            sortowaniePoNazwisku = true;
+            sortuj(true);
+            aktualizujStanListy();
+        }
+
+        private void wyszukiwanieKontaktuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            searchContact okno = new searchContact(dataBazych);
+            okno.Show(this);
+        }
+
+        private void oProgramieToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Jedyna ważna informacja o tym programie to jego data ważności: 25/10/2024");
+        }
+
+        private void dokumentacjaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex >= dataBazych.Count || listBox1.SelectedIndex < 0)
+                return;
+
+            string[] selected = dataBazych[listBox1.SelectedIndex];
+            label5.Text = selected[0];
+            label6.Text = selected[1];
+            label7.Text = selected[2];
+            label8.Text = selected[3];
+
         }
     }
 }
