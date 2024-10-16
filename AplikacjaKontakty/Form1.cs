@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.DirectoryServices.ActiveDirectory;
 using System.Linq.Expressions;
 
@@ -11,7 +12,8 @@ namespace AplikacjaKontakty
         public Form1()
         {
             InitializeComponent();
-            odczytajBaze();
+            if (File.Exists("kontakty.kel"))
+                odczytajBaze();
             aktualizujStanListy();
         }
 
@@ -73,7 +75,7 @@ namespace AplikacjaKontakty
             }
         }
 
-        public void aktualizujStanListy() // aktualizuje stan listy wyświetlającej elementy
+        private void aktualizujStanListy() // aktualizuje stan listy wyświetlającej elementy
         {
             listBox1.Items.Clear();
             foreach (string[] dane in dataBazych)
@@ -144,12 +146,19 @@ namespace AplikacjaKontakty
 
         private void oProgramieToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Jedyna ważna informacja o tym programie to jego data ważności: 25/10/2024");
+            MessageBox.Show("Autor: Piotr Pucia");
         }
 
         private void dokumentacjaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            try
+            {
+                Process.Start(new ProcessStartInfo { Arguments = "README.txt", FileName = "explorer.exe" });
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
