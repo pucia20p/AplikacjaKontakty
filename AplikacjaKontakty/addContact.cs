@@ -49,16 +49,29 @@ namespace AplikacjaKontakty
             string imie = textBox1.Text.Trim();
             string nazwisko = textBox2.Text.Trim();
             string nrTel = textBox3.Text.Trim();
-            if(isNameValid(imie) && isNameValid(nazwisko) && isPhoneValid(nrTel))
+            if (isNameValid(imie) && isNameValid(nazwisko) && isPhoneValid(nrTel))
             {
                 DateOnly dataUrodzenia = DateOnly.FromDateTime(dateTimePicker1.Value);
                 Form1? main = Owner as Form1;
                 main?.dodajNowyRekord(imie, nazwisko, nrTel, dataUrodzenia, selectedIndex);
                 this.Close();
-            } else
+            }
+            else
             {
                 MessageBox.Show("Niepoprawne dane!");
             }
+        }
+
+        private void addContact_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Form1? main = Owner as Form1;
+            main.Enabled = true;
+        }
+
+        private void addContact_Load(object sender, EventArgs e)
+        {
+            Form1? main = Owner as Form1;
+            main.Enabled = false;
         }
     }
 }

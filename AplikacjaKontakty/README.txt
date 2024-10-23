@@ -22,7 +22,7 @@ Instrukcja obsługi programu aplikacjaKontakty:
    - pole Numer Telefonu - miejsce na wpisanie numeru telefonu kontaktu - od 1 do 19 znaków, nie może zawierać średnika
    - pole Data Urodzenia - miejsce na wybranie daty urodzenia kontaktu
    - przycisk Anuluj - zamyka okno
-   - przycisk Dodaj - zamyka okno i dodaje kontakt do listy kontaktów, jeśli okno zostało otwarte w celu edycji kontaktu usuwa poprzednią wersję kontaktu z listy kontaktów
+   - przycisk Dodaj - zamyka okno i dodaje kontakt do listy kontaktów, jeśli okno zostało otwarte w celu edycji kontaktu usuwa poprzednią wersję kontaktu z listy kontaktów, jeśli pojawi się duplikat, jest on usunięty
 3. Okno wyszukiwania kontaktów:
    - pole Imię, Nazwisko i Numer Telefonu - miejsce do podania ciągów znaków do wyszukania
    - przycisk szukaj - wyszukuje w liście kontaktów pierwszy kontakt który zawiera podane ciągi znaków w swoich danych

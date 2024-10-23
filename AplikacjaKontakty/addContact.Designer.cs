@@ -142,8 +142,11 @@
             Controls.Add(textBox2);
             Controls.Add(label1);
             Controls.Add(textBox1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "addContact";
             Text = "addContact";
+            FormClosed += addContact_FormClosed;
+            Load += addContact_Load;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -30,12 +30,12 @@ namespace AplikacjaKontakty
             foreach ((string[] dane, int i) in dataBazych.Select((dane, i) => (dane, i)))
             {
                 if (
-                    dane[0].ToLower().Contains(textBox1.Text.ToLower()) && 
+                    dane[0].ToLower().Contains(textBox1.Text.ToLower()) &&
                     dane[1].ToLower().Contains(textBox2.Text.ToLower()) &&
-                    dane[2].ToLower().Contains(textBox3.Text.ToLower()) 
+                    dane[2].ToLower().Contains(textBox3.Text.ToLower())
                     )
                 {
-                    index = i; 
+                    index = i;
                     break;
                 }
             }
@@ -46,15 +46,28 @@ namespace AplikacjaKontakty
         private void button1_Click(object sender, EventArgs e)
         {
             int znaleziono = szukaj();
-            if(znaleziono < 0)
+            if (znaleziono < 0)
             {
                 MessageBox.Show("Nie znaleziono");
-            } else
+            }
+            else
             {
                 Form1? main = Owner as Form1;
                 main?.wybierzRekord(znaleziono);
                 this.Close();
             }
+        }
+
+        private void searchContact_Load(object sender, EventArgs e)
+        {
+            Form1? main = Owner as Form1;
+            main.Enabled = false;
+        }
+
+        private void searchContact_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Form1? main = Owner as Form1;
+            main.Enabled = true;
         }
     }
 }

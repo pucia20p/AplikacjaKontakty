@@ -34,6 +34,7 @@ namespace AplikacjaKontakty
                 dataBazych.RemoveAt(selectedIndex);
             }
             dataBazych.Add([imie, nazwisko, nrTel, dataUrodzenia.ToString()]);
+            usunDuplikaty();
             sortuj(sortowaniePoNazwisku);
             aktualizujStanListy();
         }
@@ -92,6 +93,28 @@ namespace AplikacjaKontakty
         public void wybierzRekord(int index)
         {
             listBox1.SelectedIndex = index;
+        }
+
+        private void usunDuplikaty()
+        {
+            //dataBazych = dataBazych.Distinct().ToList();
+            List<string[]> nowaDataBazych = [];
+            foreach(string[] dana in dataBazych)
+            {
+                bool znaleziono = false;
+                foreach (string[] dano in nowaDataBazych)
+                {
+                    if (dano[0] == dana[0] && dano[1] == dana[1] && dano[2] == dana[2] && dano[3] == dana[3])
+                    {
+                        znaleziono = true;
+                    }
+                }
+                if (!znaleziono)
+                {
+                    nowaDataBazych.Add(dana);
+                }
+            }
+            dataBazych = nowaDataBazych;
         }
 
         private void eddycjaRekorduToolStripMenuItem_Click(object sender, EventArgs e)

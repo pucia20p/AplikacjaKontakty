@@ -107,8 +107,11 @@
             Controls.Add(textBox2);
             Controls.Add(label1);
             Controls.Add(textBox1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "searchContact";
             Text = "searchContact";
+            FormClosed += searchContact_FormClosed;
+            Load += searchContact_Load;
             ResumeLayout(false);
             PerformLayout();
         }
